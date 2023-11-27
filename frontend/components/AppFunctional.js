@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 // Suggested initial states
 const initialMessage = ''
@@ -9,26 +9,84 @@ const initialIndex = 4 // the index the "B" is at
 export default function AppFunctional(props) {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
+  const [index, setIndex] = useState(initialIndex);
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
+   let x;
+   let y;
+   if(index === 0) {
+     x = 1; 
+     y = 1
+   }
+   else if(index === 1) {
+    x = 2;
+    y = 1;
+   }
+   else if(index === 2) {
+    x = 3;
+    y = 1
+   } 
+   else if(index === 3){
+    x = 1;
+    y = 2
+   }
+   else if(index === 4){
+    x = 2;
+    y = 2
+   } 
+   else if (index === 5){
+    x = 3;
+    y = 2
+   } 
+   else if (index === 6){
+    x = 1;
+    y = 3
+   }
+   else if (index === 7){
+    x = 2;
+    y = 3
+   } 
+   else if (index === 8){
+    x = 3;
+    y = 3
+   }
+   
+   return [x, y];
   }
 
   function getXYMessage() {
+    const [x, y] = getXY()
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
+    const message = `Coordinates (${x}, ${y})`;
+    return message;
   }
+ 
 
   function reset() {
     // Use this helper to reset all states to their initial values.
+    setIndex(initialIndex);
   }
 
   function getNextIndex(direction) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
+    if (direction === 'left' && index % 3 !== 0) {
+      return index -1;
+    } else if (direction === 'right' && (index + 1) % 3 !== 0) {
+      return index + 1;
+    } else if (direction === 'up' && index >= 3){
+      return index -3;
+    } else if (direction === 'down' && index < 6){
+      return index + 3;
+    } else {
+      return index;
+    }
+
   }
 
   function move(evt) {

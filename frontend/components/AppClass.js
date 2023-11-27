@@ -16,6 +16,12 @@ const initialState = {
 export default class AppClass extends React.Component {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
+  constructor() {
+    super();
+    this.state = {
+      initialState,
+    }
+  }
 
   getXY = () => {
     // It it not necessary to have a state to track the coordinates.
