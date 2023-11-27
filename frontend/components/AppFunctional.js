@@ -1,21 +1,24 @@
 import React, {useState} from 'react'
 
 // Suggested initial states
-const initialMessage = ''
-const initialEmail = ''
-const initialSteps = 0
-const initialIndex = 4 // the index the "B" is at
+const initialMessage = '';
+const initialEmail = '';
+const initialSteps = 0;
+const initialIndex = 4; // the index the "B" is at
 
 export default function AppFunctional(props) {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
-  const [index, setIndex] = useState(initialIndex);
+  const [index, setIndex] = useState(initialIndex); // slice of state
+  // index is a piece of state that represents the current index of the "B" character on a 3 by 3 grid
+  // setIndex is a function provided by useState to update the value of idex
+  // initial index is set to 4, indicationt the intital position of the "B" character
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
    let x; //initializing x with no value
-   let y;
+   let y; //initalizing y with no value
    if(index === 0) {
      x = 1; 
      y = 1
@@ -64,6 +67,7 @@ export default function AppFunctional(props) {
     const message = `Coordinates (${x}, ${y})`;
     return message;
   }
+  // console.log(getXYMessage())
  
 
   function reset() {
@@ -75,9 +79,12 @@ export default function AppFunctional(props) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
-    if (direction === 'left' && index % 3 !== 0) {
+
+    // in a 3 column grid, indices 0, 3, 6 represent the left edge, and indices 2, 5 and 8 represent the right edge 
+    if (direction === 'left' && index % 3 !== 0) { // check if direction is left, and ensures that moving left is possible 
+      // because if index is 0, 3 or 6.. % 3 will be 0
       return index -1;
-    } else if (direction === 'right' && (index + 1) % 3 !== 0) {
+    } else if (direction === 'right' && (index + 1) % 3 !== 0) { 
       return index + 1;
     } else if (direction === 'up' && index >= 3){
       return index -3;
@@ -90,9 +97,11 @@ export default function AppFunctional(props) {
   }
 
   function move(evt) {
+   
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
   }
+
 
   function onChange(evt) {
     // You will need this to update the value of the input.
