@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 // Suggested initial states
 const initialMessage = "";
@@ -112,6 +113,12 @@ export default function AppFunctional(props) {
   function onSubmit(evt) {
     // Use a POST request to send a payload to the server.
     evt.preventDefault();
+    const [x, y] = getXY()
+    axios.post(`http://localhost:9000/api/result`, 
+       {x: x, y: y, steps: steps, email: email}
+    )
+    .then(res => setMessage(res.data.message))
+    .catch(error => console.log(error))
   }
 
   return (
