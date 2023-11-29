@@ -19,23 +19,70 @@ export default class AppClass extends React.Component {
   constructor() {
     super();
     this.state = {
-      initialState,
+      ...initialState, // this will make a copy of the initialState
     }
   }
 
   getXY = () => {
+    let x; 
+    let y; 
+    const {index} = this.state; // in functional component this came from the useState
+    // if x and y are in the 0th index.. .from the jsx then coordinates = 1, 1
+    if (index === 0) {
+      x = 1;
+      y = 1;
+    }
+    else if (index === 1) {
+      x = 2;
+      y = 1;
+    }
+    else if (index === 2) {
+      x = 3;
+      y = 1;
+    }
+    else if (index === 3) {
+      x = 1;
+      y = 2;
+    }
+    else if (index === 4) {
+      x = 2;
+      y = 2;
+    }
+    else if (index === 5) {
+      x = 3;
+      y = 2;
+    }
+    else if (index === 6) {
+      x = 1;
+      y = 3;
+    } else if (index === 7) {
+      x = 2;
+      y = 3;
+    } else if (index === 8) {
+      x = 3;
+      y = 3;
+    }
+    return [x, y];
+
+
+   
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
   }
 
   getXYMessage = () => {
+    const [x, y] = this.getXY();
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
+    const message = `Coordinates ${x}, ${y}`;
+    return message; 
   }
 
   reset = () => {
     // Use this helper to reset all states to their initial values.
+    this.setIndex(initialState)
+
   }
 
   getNextIndex = (direction) => {
