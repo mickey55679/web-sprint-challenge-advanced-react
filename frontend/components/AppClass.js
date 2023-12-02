@@ -76,13 +76,13 @@ export default class AppClass extends React.Component {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
-    const message = `Coordinates ${x}, ${y}`;
+    const message = `(${x}, ${y})`;
     return message; 
   }
 
   reset = () => {
     // Use this helper to reset all states to their initial values.
-    this.setState({...this.state, ...initialState})
+    this.setState({...this.state, ...initialState});
     // (initialState)
 
   }
@@ -122,7 +122,7 @@ export default class AppClass extends React.Component {
           })
         : this.setState({
             ...this.state,
-            message: `you can't go ${direction}`,
+            message: `You can't go ${direction}`,
           });
     //  if (nextIndex !== index) {
     //   this.setState({...this.state, index: nextIndex, steps: steps + 1, message: initialMessage  })
@@ -152,8 +152,9 @@ export default class AppClass extends React.Component {
     axios.post(`http://localhost:9000/api/result`, 
        {x: x, y: y, steps: steps, email: email}
     )
-    .then(res => this.setState({...this.state, message: res.data.message}))
-    .catch(error => console.log(error))
+    .then(res => this.setState({...this.state, message: res.data.message, email: initialState.email}))
+    
+    .catch(error => this.setState({...this.state, message: error.response.data.message}))
   
   }
 
@@ -163,7 +164,7 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates {this.getXYMessage()}</h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="steps">You moved {this.state.steps} { this.state.steps === 1 ? "time" : "times"}</h3>
         </div>
         <div id="grid">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (

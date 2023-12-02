@@ -57,7 +57,7 @@ export default function AppFunctional(props) {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
-    const message = `Coordinates (${x}, ${y})`;
+    const message = `(${x}, ${y})`;
     return message;
   }
   // console.log(getXYMessage())
@@ -65,6 +65,9 @@ export default function AppFunctional(props) {
   function reset() {
     // Use this helper to reset all states to their initial values.
     setIndex(initialIndex);
+    setEmail(initialEmail);
+    setSteps(initialSteps);
+    setMessage(initialMessage);
   }
 
   function getNextIndex(direction) {
@@ -98,7 +101,7 @@ export default function AppFunctional(props) {
       setSteps(steps + 1);
       setMessage(initialMessage);
     } else {
-      setMessage(`you can't go ${direction}`);
+      setMessage(`You can't go ${direction}`);
     }
   }
 
@@ -118,14 +121,15 @@ export default function AppFunctional(props) {
        {x: x, y: y, steps: steps, email: email}
     )
     .then(res => setMessage(res.data.message))
-    .catch(error => console.log(error))
+    .then(() => setEmail(initialEmail))
+    .catch(error => setMessage(error.response.data.message))
   }
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">Coordinates {getXYMessage()}</h3>
-        <h3 id="steps">You moved {steps} times</h3>
+        <h3 id="steps">You moved {steps} {steps === 1 ? "time" : "times"}</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
